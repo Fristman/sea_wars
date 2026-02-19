@@ -2,6 +2,8 @@
 #include <time.h>
 #include <vector>
 #include <dos.h>
+#include <string>
+
 
 using namespace std;
 
@@ -65,7 +67,7 @@ protected:
 public:
     game()
     {
-        symbols[0] = 'А'; symbols[1] = 'Б'; symbols[2] = 'В'; symbols[3] = 'Г'; symbols[4] = 'Д'; symbols[5] = 'Е'; symbols[6] = 'Ё'; symbols[7] = 'Ж'; symbols[8] = 'З'; symbols[9] = 'И';
+        symbols[0] = 'А'; symbols[1] = 'Б'; symbols[2] = 'В'; symbols[3] = 'Г'; symbols[4] = 'Д'; symbols[5] = 'Е'; symbols[6] = 'Ж'; symbols[7] = 'З'; symbols[8] = 'И'; symbols[9] = 'К';
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -84,10 +86,10 @@ public:
         }
         for (int i = 0; i < 10; i++)
         {
-            cout << endl<<i+1;
+            cout << endl << i + 1;
             for (int j = 0; j < 10; j++)
             {
-                cout<<"\t" << deck1[i][j];
+                cout << "\t" << deck1[i][j];
             }
         }
     }
@@ -100,7 +102,7 @@ public:
         }
         for (int i = 0; i < 10; i++)
         {
-            cout << endl << i+1;
+            cout << endl << i + 1;
             for (int j = 0; j < 10; j++)
             {
                 cout << "\t" << deck2[i][j];
@@ -110,7 +112,7 @@ public:
     void print2decks()
     {
         cout << endl;
-        cout << "\t\t\t\t\t\tДоска 1\t\t\t\t\t\t\t\t\t\t\tДоска 2"<<endl;
+        cout << "\t\t\t\t\t\tДоска 1\t\t\t\t\t\t\t\t\t\t\tДоска 2" << endl;
         for (int i = 0; i < 10; i++)
         {
             cout << "\t" << symbols[i];
@@ -122,12 +124,12 @@ public:
         }
         for (int i = 0; i < 10; i++)
         {
-            cout << endl << i+1;
+            cout << endl << i + 1;
             for (int j = 0; j < 10; j++)
             {
                 cout << "\t" << deck1[i][j];
             }
-            cout << "\t"<<i+1;
+            cout << "\t" << i + 1;
             for (int j = 0; j < 10; j++)
             {
                 cout << "\t" << deck2[i][j];
@@ -138,11 +140,11 @@ public:
     {
         bool temp = false;
         printdeck1();
-        cout <<endl<< "Постановка " << lenght << "-палубного корабля на доску 1"<<endl;
+        cout << endl << "Постановка " << lenght << "-палубного корабля на доску 1" << endl;
+        int temp1 = 1; char temp2 = 'А'; bool temp3 = false; bool temp4 = false;
+        int A, B;
         while (temp != true)
         {
-            int temp1 = 1; char temp2 = 'А', bool temp3 = false;
-            int A, B;
             while (temp3 != true)
             {
                 cout << "Выберите позицию хвоста корабля (цифру от 1 до 10): ";
@@ -150,7 +152,7 @@ public:
                 cout << "Выберите позицию хвоста корабля (букву от А до И на русском): ";
                 cin >> temp2;
                 A = temp1 - 1;
-                B = int(temp2) + 112;
+                B = int(temp2) - 65;
                 if (A >= 0 && A <= 9 && B >= 0 && B <= 9 && deck1[A][B] == 0)
                     temp3 = true;
                 else
@@ -159,7 +161,8 @@ public:
             cout << "Позиция хвоста " << temp1 << temp2 << endl;
             cout << "Выберите направление корабля" << endl << "1 - влево" << "\n2 - вверх\n3 - вправо\n4 - вниз\nВыбор:";
             cin >> temp1;
-            while (temp3 != false)
+            temp3 = false;
+            while (!temp3)
             {
                 while (temp1 < 1 && temp1>4)
                 {
@@ -168,32 +171,32 @@ public:
                 }
                 switch (temp1)
                 {
-                case 1: 
-                    bool temp4 = false;
-                    for (int i = B; i < B-lenght+1; i--)
+                case 1:
+                    temp4 = false;
+                    for (int i = B; i < B - lenght + 1; i--)
                     {
                         if (deck1[A][i] != 0)
                             temp4 = true;
                     }
-                if ((B - lenght +1) < 0 && temp4 == false)
-                {
-                    cout << "Нельзя поставить корабль влево, выберите другое направление"<<endl;
+                    if ((B - lenght + 1) < 0 && temp4 == false)
+                    {
+                        cout << "Нельзя поставить корабль влево, выберите другое направление" << endl;
+                        break;
+                    }
+                    cout << endl << "Начальная и конечная позиция корабля" << A << char(B - 112 - lenght + 1) << " - " << A << char(B - 112) << endl << "Выполняется постановка...";
+                    for (int i = 0; i < lenght; i++)
+                    {
+                        deck1[A][B - i] = 2;
+                        deck1[A - 1][B - i] = 1;
+                        deck1[A + 1][B - i] = 1;
+                    }
+                    deck1[A][B - lenght] = 1; deck1[A - 1][B - lenght] = 1; deck1[A + 1][B - lenght] = 1;
+                    deck1[A][B + 1] = 1; deck1[A + 1][B + 1] = 1; deck1[A - 1][B + 1] = 1;
+                    temp = true;
+                    temp3 = true;
                     break;
-                }
-                cout << endl << "Начальная и конечная позиция корабля" << A << char(B - 112 - lenght + 1) << " - " << A << char(B - 112)<<endl<<"Выполняется постановка...";
-                for (int i = 0; i < lenght; i++)
-                {
-                    deck1[A][B - i] = 2;
-                    deck1[A - 1][B - i] = 1;
-                    deck1[A + 1][B - i] = 1;
-                }
-                deck1[A][B - lenght] = 1; deck1[A-1][B - lenght] = 1; deck1[A+1][B - lenght] = 1;
-                deck1[A][B + 1] = 1; deck1[A+1][B + 1] = 1; deck1[A-1][B + 1] = 1;
-                temp = true;
-                temp3 = true;
-                break;
                 case 2:
-                    bool temp4 = false;
+                    temp4 = false;
                     for (int i = A; i < A - lenght + 1; i--)
                     {
                         if (deck1[i][B] != 0)
@@ -204,20 +207,20 @@ public:
                         cout << "Нельзя поставить корабль влево, выберите другое направление" << endl;
                         break;
                     }
-                    cout << endl << "Начальная и конечная позиция корабля" << A-lenght+1 << char(B - 112) << " - " << A << char(B - 112) << endl << "Выполняется постановка...";
+                    cout << endl << "Начальная и конечная позиция корабля" << A - lenght + 1 << char(B - 112) << " - " << A << char(B - 112) << endl << "Выполняется постановка...";
                     for (int i = 0; i < lenght; i++)
                     {
-                        deck1[A-i][B] = 2;
+                        deck1[A - i][B] = 2;
                         deck1[A - i][B - 1] = 1;
-                        deck1[A -i][B + 1] = 1;
+                        deck1[A - i][B + 1] = 1;
                     }
                     deck1[A - lenght][B] = 1; deck1[A - lenght][B - 1] = 1; deck1[A - lenght][B + 1] = 1;
-                    deck1[A +1 ][B] = 1; deck1[A + 1][B - 1] = 1; deck1[A + 1][B + 1] = 1;
+                    deck1[A + 1][B] = 1; deck1[A + 1][B - 1] = 1; deck1[A + 1][B + 1] = 1;
                     temp = true;
                     temp3 = true;
                     break;
                 case 3:
-                    bool temp4 = false;
+                    temp4 = false;
                     for (int i = B; i < B + lenght - 1; i--)
                     {
                         if (deck1[A][i] != 0)
@@ -241,7 +244,7 @@ public:
                     temp3 = true;
                     break;
                 case 4:
-                    bool temp4 = false;
+                    temp4 = false;
                     for (int i = A; i < A + lenght - 1; i--)
                     {
                         if (deck1[i][B] != 0)
@@ -273,16 +276,16 @@ public:
     void setdeck1()
     {
         cout << "ВНИМАНИЕ!! Сейчас будет установка первой доски, не допускайте подглядывание 2 игрока." << endl << "Если 2 игрок не наблюдает, напишите \"+\":";
-        char temp;
-        while (temp != '+')
-            cin >> temp;
+        char temp[1] = {'-'};
+        while (temp[0] != '+')
+            cin >> temp[0];
         int ship1 = 4; int ship2 = 3; int ship3 = 2; int ship4 = 1;
-        int temp;
-        while (ship1 != 0 || ship2 != 0 || ship3 != 0 || ship4 != 0);
+        int temp1;
+        while (ship1 != 0 || ship2 != 0 || ship3 != 0 || ship4 != 0)
         {
             cout << endl << "Выберите количество палуб корабля (1, 2, 3, 4) для расстановки:";
-            cin >> temp;
-            switch (temp)
+            cin >> temp1;
+            switch (temp1)
             {
             case 1:
                 if (ship1 == 0)
@@ -323,8 +326,7 @@ public:
         cout << "Итоговая доска 1:" << endl;
         printdeck1();
         cout << "Напишите \"+\" чтобы очистить консоль: ";
-        char temp;
-        while (temp != '+')
+        while (temp[0] != '+')
             cin >> temp;
         system("CLS");
     }
