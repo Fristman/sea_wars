@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9cb12cf9-40f8-4c2f-9406-1d6509c7be00}</ProjectGuid>
-    <RootNamespace>Seawar</RootNamespace>
+    <ProjectGuid>{6bb11080-7a8b-4c91-a763-ef3304931a96}</ProjectGuid>
+    <RootNamespace>SeaWarsBeta</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Sea war.cpp" />
+    <ClCompile Include="seawar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
